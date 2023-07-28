@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://ringstring.art/ru/code -->
+<html lang="ru" dir="ltr">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex">
+	<title>Введи код, указанный внутри набора RingString</title>
+	<meta name="description" content="RingString">
+	<link rel="icon" type="image/png" href="#favicon.png">
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="1ZMhUOeNiTZP5QF6dhe6N11xu6JsvUUpiJCffDR5">
+
+
+
+	<!-- Styles -->
+	<link href="./code_files/app.css" rel="stylesheet">
+	<style>
+		.rs-workspace {
+			background-image: url(https://ringstring.art/img/bg-main-3.svg);
+			background-repeat: no-repeat;
+			background-position: top left;
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		.rs-form-control {
+			color: #111 !important;
+			border-color: transparent !important;
+			border-radius: 40px;
+			padding: 30px;
+			letter-spacing: 2px;
+			font-size: 0.8rem;
+		}
+
+		.rs-form-control:focus {
+			border-color: #e0e0e0 !important;
+			box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.18), 0 0 20px 0 rgba(0, 0, 0, 0.04) !important;
+		}
+
+		.rs-code {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		.rs-footer {
+			font-size: 0.7rem;
+			font-weight: 100;
+		}
+
+		@media (min-width: 768px) {
+			.rs-header .rs-logo img {
+				width: 300px;
+			}
+
+			.rs-form-control {
+				font-size: 1.2rem;
+				padding: 35px;
+			}
+
+			.rs-footer {
+				font-size: 1.0rem;
+			}
+
+			.rs-footer .rs-logo img {
+				width: 80px;
+				height: 70px;
+			}
+		}
+
+		#code {
+			width: 14em;
+		}
+
+		.alert-danger #code {
+			color: #e80000 !important;
+		}
+	</style>
+
+	<!-- Scripts -->
+	<script src="./code_files/app.js.Без названия" defer=""></script>
+	<script type="application/javascript">
+
+		function updateNextButton() {
+			var input = $('#code');
+			var max = Number(input.attr('maxlength'));
+			$('#btn_next').prop('disabled', max > input[0].value.trim().length);
+		}
+
+		window.onload = function () {
+
+			updateNextButton();
+
+			$('#code').on('keyup blur', function () {
+				updateNextButton();
+			});
+
+			var sOnDown = '';
+			var sOnInput = '';
+
+			$('#code').on('keydown', function (e) {
+				sOnDown = this.value;
+				this.setSelectionRange(this.value.length, this.value.length);
+			});
+
+			$('#code').on('input', function (e) {
+				sOnInput = this.value;
+				var c;
+				var grow_by = sOnInput.length - sOnDown.length;
+				if (grow_by > 1) {
+					for (c of sOnInput) {
+						if (!((c >= '1' && c <= '9') || (c >= 'A' && c <= 'N') || (c >= 'P' && c <= 'Z') || (c >= 'a' && c <= 'n') || (c >= 'p' && c <= 'z') || (c == '-'))) {
+							this.value = sOnDown;
+							e.preventDefault();
+							return false;
+						}
+					}
+					return true;
+				}
+				if (grow_by > 0) {
+					c = this.value.slice(-1);
+					if ((c >= '1' && c <= '9') || (c >= 'A' && c <= 'N') || (c >= 'P' && c <= 'Z') || (c >= 'a' && c <= 'n') || (c >= 'p' && c <= 'z')) {
+						if (this.value.length == 4) {
+							this.value += '-';
+						}
+					} else {
+						this.value = this.value.slice(0, -1);
+					}
+				} else {
+					c = sOnDown.slice(-1);
+					if (c == '-') {
+						this.value = this.value.slice(0, -1);
+					}
+				}
+				return true;
+			});
+
+		}
+
+	</script>
+	<style></style>
+</head>
+
+<body class="position-relative">
+
+	<div id="app">
+		<div class="rs-workspace">
+			<div class="rs-header mb-auto text-center pt-2 pb-2">
+				<div class="rs-logo rs-px">
+					<a href="#ru">
+						<img src="./code_files/logo-top-full-b.svg" alt="logo" width="180">
+					</a>
+				</div>
+			</div>
+			<div class="rs-content pt-4 pb-5">
+				<div class="text-center pb-5">
+
+					<div class="rs-column rs-px">
+						Введи восьмизначный код<br>из инструкции к набору
+					</div>
+
+					<form method="post">
+						<input type="hidden" name="_token" value="1ZMhUOeNiTZP5QF6dhe6N11xu6JsvUUpiJCffDR5">
+
+						<div class="py-4 ">
+
+							<div class="">
+								<div class="form-group text-center">
+									<input class="form-control rs-form-control rs-shadow rs-code text-center text-uppercase m-auto"
+										name="code" id="code" type="text" maxlength="9" placeholder="XXXX-XXXX" value="">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="pb-5">
+							<a id="btn_prev" class="btn rs-btn rs-shadow btn-light p-3 mx-2" role="button" href="#">
+								<span class="text-uppercase align-middle mx-3">Назад</span>
+							</a>
+							<button id="btn_next" type="submit" class="btn rs-btn rs-shadow btn-light align-middle p-3 mx-2"
+								disabled="">
+								<span class="text-uppercase align-middle mx-3">Далее</span>
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="rs-footer rs-black mt-auto pt-4">
+				<div class="rs-logo rs-px py-3">
+					<div class="row px-md-4 px-lg-5">
+						<div class="col-4 p-0">
+							<a href="#ru"><img src="./code_files/elm-logo-footer.svg" alt="logo" width="40" height="35"></a>
+						</div>
+						<div class="col-8 p-0 text-right align-self-center text-white">
+							Свяжитесь с нами:<br>
+							<a class="text-white" href="mailto:example@gmail.art">example@gmail.art</a><br>
+							© 2021–2023
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
